@@ -1,0 +1,98 @@
+name: claimtrace
+
+services:
+  mysql:
+    image: mysql:8.0.39
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-claimtrace}
+      MYSQL_USER: ${MYSQL_USER:-claimtrace}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set MYSQL_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in .env}
+      TZ: UTC
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --max-allowed-packet=64M
+    volumes:
+      - claimtrace_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  elasticsearch:
+    image: elasticsearch:8.11.3
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      xpack.security.enrollment.enabled: "false"
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms1g -Xmx1g}
+    volumes:
+      - claimtrace_es:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9200/_cluster/health >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  app:
+    build:
+      context: .
+      args:
+        VITE_CLAIMTRACE_TENANT_ID: ${CLAIMTRACE_DEFAULT_USER_ID:-local-user}
+        VITE_CLAIMTRACE_DATASET_ID: ${CLAIMTRACE_DEFAULT_DATASET_ID:-claimtrace-default}
+        VITE_CLAIMTRACE_DATASET_NAME: ${CLAIMTRACE_DEFAULT_DATASET_NAME:-Default Knowledge Base}
+        VITE_CLAIMTRACE_CHAT_MODEL: ${CHAT_MODEL:-qwen3:8b}
+        VITE_CLAIMTRACE_CHAT_MODEL_ID: ${CHAT_MODEL:-qwen3:8b}@API
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      CLAIMTRACE_HOST: 0.0.0.0
+      CLAIMTRACE_PORT: 9222
+      CLAIMTRACE_LOG_LEVEL: ${CLAIMTRACE_LOG_LEVEL:-info}
+      CLAIMTRACE_DATA_DIR: /var/lib/claimtrace
+      CLAIMTRACE_DEFAULT_USER_ID: ${CLAIMTRACE_DEFAULT_USER_ID:-local-user}
+      CLAIMTRACE_DEFAULT_DATASET_ID: ${CLAIMTRACE_DEFAULT_DATASET_ID:-claimtrace-default}
+      CLAIMTRACE_DEFAULT_DATASET_NAME: ${CLAIMTRACE_DEFAULT_DATASET_NAME:-Default Knowledge Base}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-claimtrace}
+      MYSQL_USER: ${MYSQL_USER:-claimtrace}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_INDEX: ${ELASTICSEARCH_INDEX:-claimtrace_chunks_v1}
+      EMBEDDING_BASE_URL: ${EMBEDDING_BASE_URL:?set EMBEDDING_BASE_URL in .env}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-bge-m3}
+      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-local-api-key}
+      EMBEDDING_DIMENSIONS: ${EMBEDDING_DIMENSIONS:-1024}
+      EMBEDDING_TIMEOUT_MS: ${EMBEDDING_TIMEOUT_MS:-120000}
+      CHAT_BASE_URL: ${CHAT_BASE_URL:?set CHAT_BASE_URL in .env}
+      CHAT_MODEL: ${CHAT_MODEL:-qwen3:8b}
+      CHAT_API_KEY: ${CHAT_API_KEY:-local-api-key}
+      CHAT_TIMEOUT_MS: ${CHAT_TIMEOUT_MS:-180000}
+      RETRIEVAL_CANDIDATE_COUNT: ${RETRIEVAL_CANDIDATE_COUNT:-30}
+      RETRIEVAL_FINAL_COUNT: ${RETRIEVAL_FINAL_COUNT:-12}
+      RETRIEVAL_DECAY_DAYS: ${RETRIEVAL_DECAY_DAYS:-730}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - claimtrace_data:/var/lib/claimtrace
+    ports:
+      - "${CLAIMTRACE_PORT:-9222}:9222"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:9222/livez').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  claimtrace_mysql:
+  claimtrace_es:
+  claimtrace_data:

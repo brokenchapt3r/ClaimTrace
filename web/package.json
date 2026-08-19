@@ -1,0 +1,30 @@
+{
+  "name": "claimtrace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Verifiable knowledge QA with claim-evidence graphs and traceable reasoning",
+  "author": "Finitude",
+  "type": "module",
+  "scripts": {
+    "build": "vite build --mode production",
+    "dev": "vite --host 0.0.0.0",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "vitest run",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lucide-react": "^1.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^5.1.2",
+    "less": "^4.4.2",
+    "typescript": "^5.7.2",
+    "vite": "^7.3.0",
+    "vitest": "^3.2.4"
+  }
+}

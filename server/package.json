@@ -1,0 +1,29 @@
+{
+  "name": "claimtrace-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "type-check": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^9.2.1",
+    "@fastify/static": "^10.1.2",
+    "fastify": "^5.6.1",
+    "mammoth": "^1.11.0",
+    "mysql2": "^3.14.4",
+    "pdf-parse": "^1.1.1",
+    "pino": "^9.9.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/pdf-parse": "^1.1.5",
+    "tsx": "^4.20.5",
+    "typescript": "^5.7.2",
+    "vitest": "^3.2.4"
+  }
+}

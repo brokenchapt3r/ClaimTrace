@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="2962" viewBox="0 0 1500 2962">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="#e5e7eb"/>
+  <rect x="24" y="24" width="1452" height="2914" rx="18" fill="url(#bg)" filter="url(#shadow)"/>
+  <circle cx="58" cy="56" r="7" fill="#ef4444"/>
+  <circle cx="82" cy="56" r="7" fill="#f59e0b"/>
+  <circle cx="106" cy="56" r="7" fill="#22c55e"/>
+  <text x="132" y="62" fill="#f8fafc" font-size="22" font-family="Arial, sans-serif" font-weight="700">声明证据二分图边构建与状态判定</text>
+  <text x="34" y="92" fill="#94a3b8" font-size="15" font-family="Arial, sans-serif">ClaimTrace processing modules</text>
+  <g font-family="Consolas, monospace" font-size="16" xml:space="preserve">
+    <style>.ln{fill:#64748b;text-anchor:end}</style>
+<text x="34" y="112" class="ln"></text><text x="104" y="112" fill="#7dd3fc">// web/src/adapters/model.ts</text>
+<text x="34" y="136" class="ln">205</text><text x="104" y="136" fill="#e5e7eb">  async classifyRelations(</text>
+<text x="34" y="160" class="ln">206</text><text x="104" y="160" fill="#facc15">    claims: Claim[],</text>
+<text x="34" y="184" class="ln">207</text><text x="104" y="184" fill="#facc15">    evidence: Evidence[],</text>
+<text x="34" y="208" class="ln">208</text><text x="104" y="208" fill="#e5e7eb">    access: AccessContext,</text>
+<text x="34" y="232" class="ln">209</text><text x="104" y="232" fill="#facc15">    onProgress?: (completed: number, total: number) =&gt; void,</text>
+<text x="34" y="256" class="ln">210</text><text x="104" y="256" fill="#e5e7eb">  ) {</text>
+<text x="34" y="280" class="ln">211</text><text x="104" y="280" fill="#c084fc">    const claimPayload = claims.map((claim) =&gt; ({</text>
+<text x="34" y="304" class="ln">212</text><text x="104" y="304" fill="#e5e7eb">      id: claim.id,</text>
+<text x="34" y="328" class="ln">213</text><text x="104" y="328" fill="#e5e7eb">      text: claim.atom,</text>
+<text x="34" y="352" class="ln">214</text><text x="104" y="352" fill="#e5e7eb">      components: claim.components,</text>
+<text x="34" y="376" class="ln">215</text><text x="104" y="376" fill="#e5e7eb">    }));</text>
+<text x="34" y="400" class="ln">216</text><text x="104" y="400" fill="#c084fc">    const tiles: Array&lt;{</text>
+<text x="34" y="424" class="ln">217</text><text x="104" y="424" fill="#e5e7eb">      claims: typeof claimPayload;</text>
+<text x="34" y="448" class="ln">218</text><text x="104" y="448" fill="#facc15">      evidence: Array&lt;{ id: string; text: string }&gt;;</text>
+<text x="34" y="472" class="ln">219</text><text x="104" y="472" fill="#e5e7eb">    }&gt; = [];</text>
+<text x="34" y="496" class="ln">220</text><text x="104" y="496" fill="#7dd3fc">    // The matrix is evaluated in bounded tiles so every pair receives a reason without allowing</text>
+<text x="34" y="520" class="ln">221</text><text x="104" y="520" fill="#7dd3fc">    // a large graph to exhaust the provider's output budget midway through a JSON document.</text>
+<text x="34" y="544" class="ln">222</text><text x="104" y="544" fill="#c084fc">    for (let offset = 0; offset &lt; evidence.length; offset += 3) {</text>
+<text x="34" y="568" class="ln">223</text><text x="104" y="568" fill="#c084fc">      const evidencePayload = evidence</text>
+<text x="34" y="592" class="ln">224</text><text x="104" y="592" fill="#e5e7eb">        .slice(offset, offset + 3)</text>
+<text x="34" y="616" class="ln">225</text><text x="104" y="616" fill="#e5e7eb">        .map((item) =&gt; ({ id: item.id, text: item.text }));</text>
+<text x="34" y="640" class="ln">226</text><text x="104" y="640" fill="#c084fc">      for (let claimOffset = 0; claimOffset &lt; claimPayload.length; claimOffset += 5) {</text>
+<text x="34" y="664" class="ln">227</text><text x="104" y="664" fill="#e5e7eb">        tiles.push({</text>
+<text x="34" y="688" class="ln">228</text><text x="104" y="688" fill="#e5e7eb">          claims: claimPayload.slice(claimOffset, claimOffset + 5),</text>
+<text x="34" y="712" class="ln">229</text><text x="104" y="712" fill="#e5e7eb">          evidence: evidencePayload,</text>
+<text x="34" y="736" class="ln">230</text><text x="104" y="736" fill="#e5e7eb">        });</text>
+<text x="34" y="760" class="ln">231</text><text x="104" y="760" fill="#e5e7eb">      }</text>
+<text x="34" y="784" class="ln">232</text><text x="104" y="784" fill="#e5e7eb">    }</text>
+<text x="34" y="808" class="ln">233</text><text x="104" y="808" fill="#e5e7eb"> </text>
+<text x="34" y="832" class="ln">234</text><text x="104" y="832" fill="#c084fc">    const tileResults: NliResult[][] = Array.from({ length: tiles.length }, () =&gt; []);</text>
+<text x="34" y="856" class="ln">235</text><text x="104" y="856" fill="#c084fc">    let nextTile = 0;</text>
+<text x="34" y="880" class="ln">236</text><text x="104" y="880" fill="#c084fc">    let completedTiles = 0;</text>
+<text x="34" y="904" class="ln">237</text><text x="104" y="904" fill="#c084fc">    const runWorker = async () =&gt; {</text>
+<text x="34" y="928" class="ln">238</text><text x="104" y="928" fill="#c084fc">      while (nextTile &lt; tiles.length) {</text>
+<text x="34" y="952" class="ln">239</text><text x="104" y="952" fill="#c084fc">        const tileIndex = nextTile;</text>
+<text x="34" y="976" class="ln">240</text><text x="104" y="976" fill="#e5e7eb">        nextTile += 1;</text>
+<text x="34" y="1000" class="ln">241</text><text x="104" y="1000" fill="#c084fc">        const tile = tiles[tileIndex];</text>
+<text x="34" y="1024" class="ln">242</text><text x="104" y="1024" fill="#c084fc">        const expectedPairs = tile.claims.flatMap((claim) =&gt;</text>
+<text x="34" y="1048" class="ln">243</text><text x="104" y="1048" fill="#86efac">          tile.evidence.map((item) =&gt; `${claim.id}::${item.id}`),</text>
+<text x="34" y="1072" class="ln">244</text><text x="104" y="1072" fill="#e5e7eb">        );</text>
+<text x="34" y="1096" class="ln">245</text><text x="104" y="1096" fill="#c084fc">        const collected = new Map&lt;string, NliResult&gt;();</text>
+<text x="34" y="1120" class="ln">246</text><text x="104" y="1120" fill="#c084fc">        const evaluatePairs = async (pairKeys: string[]) =&gt; {</text>
+<text x="34" y="1144" class="ln">247</text><text x="104" y="1144" fill="#c084fc">          const requestedPairs = pairKeys.map((pair) =&gt; {</text>
+<text x="34" y="1168" class="ln">248</text><text x="104" y="1168" fill="#c084fc">            const [claimId, evidenceId] = pair.split('::');</text>
+<text x="34" y="1192" class="ln">249</text><text x="104" y="1192" fill="#c084fc">            return { claim_id: claimId, evidence_id: evidenceId };</text>
+<text x="34" y="1216" class="ln">250</text><text x="104" y="1216" fill="#e5e7eb">          });</text>
+<text x="34" y="1240" class="ln">251</text><text x="104" y="1240" fill="#c084fc">          const claimIds = new Set(requestedPairs.map((pair) =&gt; pair.claim_id));</text>
+<text x="34" y="1264" class="ln">252</text><text x="104" y="1264" fill="#c084fc">          const evidenceIds = new Set(requestedPairs.map((pair) =&gt; pair.evidence_id));</text>
+<text x="34" y="1288" class="ln">253</text><text x="104" y="1288" fill="#c084fc">          const scopedClaims = tile.claims.filter((claim) =&gt; claimIds.has(claim.id));</text>
+<text x="34" y="1312" class="ln">254</text><text x="104" y="1312" fill="#c084fc">          const scopedEvidence = tile.evidence.filter((item) =&gt; evidenceIds.has(item.id));</text>
+<text x="34" y="1336" class="ln">255</text><text x="104" y="1336" fill="#c084fc">          const parsed = await this.completeJson&lt;{ relations?: NliResult[] }&gt;(</text>
+<text x="34" y="1360" class="ln">256</text><text x="104" y="1360" fill="#86efac">            '你是自然语言推断分类器。必须为指定的每一个声明-证据组合输出一条结果。不相关不是空结果，而是 unknown 概率最高。三个概率之和必须为 1；理由必须指出判断依据并控制在 80 字以内。只返回合法 JSON。',</text>
+<text x="34" y="1384" class="ln">257</text><text x="104" y="1384" fill="#86efac">            `敏感级别：${access.sensitivity}\n声明：${JSON.stringify(scopedClaims)}\n证据：${JSON.stringify(scopedEvidence)}\n必须计算的组合：${JSON.stringify(requestedPairs)}\n\nrelations 数组必须恰好包含 ${requestedPairs.length} 条并覆盖上述每个组合：{"relations":[{"claim_id":"C1","evidence_id":"E1","support":0.0,"conflict":0.0,"unknown":1.0,"covered_components":["C1.S1"],"reason":"证据未涉及该声明"}]}`,</text>
+<text x="34" y="1408" class="ln">258</text><text x="104" y="1408" fill="#86efac">            { maxTokens: 8192, stage: `relations:${tileIndex + 1}/${tiles.length}` },</text>
+<text x="34" y="1432" class="ln">259</text><text x="104" y="1432" fill="#e5e7eb">          );</text>
+<text x="34" y="1456" class="ln">260</text><text x="104" y="1456" fill="#c084fc">          const requested = new Set(pairKeys);</text>
+<text x="34" y="1480" class="ln">261</text><text x="104" y="1480" fill="#e5e7eb">          (parsed.relations || []).forEach((relation) =&gt; {</text>
+<text x="34" y="1504" class="ln">262</text><text x="104" y="1504" fill="#c084fc">            const key = `${relation.claim_id}::${relation.evidence_id}`;</text>
+<text x="34" y="1528" class="ln">263</text><text x="104" y="1528" fill="#c084fc">            if (requested.has(key)) collected.set(key, relation);</text>
+<text x="34" y="1552" class="ln">264</text><text x="104" y="1552" fill="#e5e7eb">          });</text>
+<text x="34" y="1576" class="ln">265</text><text x="104" y="1576" fill="#e5e7eb">        };</text>
+<text x="34" y="1600" class="ln">266</text><text x="104" y="1600" fill="#e5e7eb"> </text>
+<text x="34" y="1624" class="ln">267</text><text x="104" y="1624" fill="#c084fc">        await evaluatePairs(expectedPairs);</text>
+<text x="34" y="1648" class="ln">268</text><text x="104" y="1648" fill="#7dd3fc">        // Some providers treat a wholly unrelated batch as an empty sparse graph. Shrinking the</text>
+<text x="34" y="1672" class="ln">269</text><text x="104" y="1672" fill="#7dd3fc">        // unresolved set first by claim and then by pair obtains explicit model judgments while</text>
+<text x="34" y="1696" class="ln">270</text><text x="104" y="1696" fill="#7dd3fc">        // keeping the common path to one request per tile.</text>
+<text x="34" y="1720" class="ln">271</text><text x="104" y="1720" fill="#c084fc">        for (const repairGroupSize of [3, 1]) {</text>
+<text x="34" y="1744" class="ln">272</text><text x="104" y="1744" fill="#c084fc">          const missingPairs = expectedPairs.filter((pair) =&gt; !collected.has(pair));</text>
+<text x="34" y="1768" class="ln">273</text><text x="104" y="1768" fill="#c084fc">          if (missingPairs.length === 0) break;</text>
+<text x="34" y="1792" class="ln">274</text><text x="104" y="1792" fill="#c084fc">          for (let offset = 0; offset &lt; missingPairs.length; offset += repairGroupSize) {</text>
+<text x="34" y="1816" class="ln">275</text><text x="104" y="1816" fill="#c084fc">            await evaluatePairs(missingPairs.slice(offset, offset + repairGroupSize));</text>
+<text x="34" y="1840" class="ln">276</text><text x="104" y="1840" fill="#e5e7eb">          }</text>
+<text x="34" y="1864" class="ln">277</text><text x="104" y="1864" fill="#e5e7eb">        }</text>
+<text x="34" y="1888" class="ln">278</text><text x="104" y="1888" fill="#c084fc">        const unresolvedPairs = expectedPairs.filter((pair) =&gt; !collected.has(pair));</text>
+<text x="34" y="1912" class="ln">279</text><text x="104" y="1912" fill="#c084fc">        if (unresolvedPairs.length &gt; 0) {</text>
+<text x="34" y="1936" class="ln">280</text><text x="104" y="1936" fill="#e5e7eb">          throw new Error(</text>
+<text x="34" y="1960" class="ln">281</text><text x="104" y="1960" fill="#e5e7eb">            `模型未完成关系批次 ${tileIndex + 1}/${tiles.length}，缺少 ${unresolvedPairs</text>
+<text x="34" y="1984" class="ln">282</text><text x="104" y="1984" fill="#e5e7eb">              .slice(0, 8)</text>
+<text x="34" y="2008" class="ln">283</text><text x="104" y="2008" fill="#86efac">              .map((pair) =&gt; pair.replace('::', '/'))</text>
+<text x="34" y="2032" class="ln">284</text><text x="104" y="2032" fill="#86efac">              .join('、')}`,</text>
+<text x="34" y="2056" class="ln">285</text><text x="104" y="2056" fill="#e5e7eb">          );</text>
+<text x="34" y="2080" class="ln">286</text><text x="104" y="2080" fill="#e5e7eb">        }</text>
+<text x="34" y="2104" class="ln">287</text><text x="104" y="2104" fill="#e5e7eb">        tileResults[tileIndex] = expectedPairs.map((pair) =&gt; collected.get(pair) as NliResult);</text>
+<text x="34" y="2128" class="ln">288</text><text x="104" y="2128" fill="#e5e7eb">        completedTiles += 1;</text>
+<text x="34" y="2152" class="ln">289</text><text x="104" y="2152" fill="#e5e7eb">        onProgress?.(completedTiles, tiles.length);</text>
+<text x="34" y="2176" class="ln">290</text><text x="104" y="2176" fill="#e5e7eb">      }</text>
+<text x="34" y="2200" class="ln">291</text><text x="104" y="2200" fill="#e5e7eb">    };</text>
+<text x="34" y="2224" class="ln">292</text><text x="104" y="2224" fill="#e5e7eb">    onProgress?.(0, tiles.length);</text>
+
+<text x="34" y="2272" class="ln"></text><text x="104" y="2272" fill="#7dd3fc">// web/src/core/pipeline.ts</text>
+<text x="34" y="2296" class="ln">25</text><text x="104" y="2296" fill="#e5e7eb">): Promise&lt;PipelineResult&gt; {</text>
+<text x="34" y="2320" class="ln">26</text><text x="104" y="2320" fill="#86efac">  onProgress?.({ stage: 'draft', message: '正在基于候选证据生成原始答案' });</text>
+<text x="34" y="2344" class="ln">27</text><text x="104" y="2344" fill="#c084fc">  const draft = await model.generateDraft(question, inputEvidence);</text>
+<text x="34" y="2368" class="ln">28</text><text x="104" y="2368" fill="#e5e7eb"> </text>
+<text x="34" y="2392" class="ln">29</text><text x="104" y="2392" fill="#86efac">  onProgress?.({ stage: 'claims', message: '正在抽取原子声明、语义成分和依赖关系', draft });</text>
+<text x="34" y="2416" class="ln">30</text><text x="104" y="2416" fill="#c084fc">  const parsed = await model.parseClaims(draft);</text>
+<text x="34" y="2440" class="ln">31</text><text x="104" y="2440" fill="#e5e7eb"> </text>
+<text x="34" y="2464" class="ln">32</text><text x="104" y="2464" fill="#86efac">  onProgress?.({ stage: 'relations', message: '正在批量执行声明-证据自然语言推断' });</text>
+<text x="34" y="2488" class="ln">33</text><text x="104" y="2488" fill="#c084fc">  const relations = await model.classifyRelations(</text>
+<text x="34" y="2512" class="ln">34</text><text x="104" y="2512" fill="#e5e7eb">    parsed.claims,</text>
+<text x="34" y="2536" class="ln">35</text><text x="104" y="2536" fill="#e5e7eb">    inputEvidence,</text>
+<text x="34" y="2560" class="ln">36</text><text x="104" y="2560" fill="#e5e7eb">    access,</text>
+<text x="34" y="2584" class="ln">37</text><text x="104" y="2584" fill="#e5e7eb">    (completed, total) =&gt; onProgress?.({</text>
+<text x="34" y="2608" class="ln">38</text><text x="104" y="2608" fill="#86efac">      stage: 'relations',</text>
+<text x="34" y="2632" class="ln">39</text><text x="104" y="2632" fill="#e5e7eb">      message: completed === 0</text>
+<text x="34" y="2656" class="ln">40</text><text x="104" y="2656" fill="#86efac">        ? `正在准备 ${total} 个声明-证据推断批次`</text>
+<text x="34" y="2680" class="ln">41</text><text x="104" y="2680" fill="#86efac">        : `正在执行声明-证据关系推断（${completed}/${total}）`,</text>
+<text x="34" y="2704" class="ln">42</text><text x="104" y="2704" fill="#e5e7eb">    }),</text>
+<text x="34" y="2728" class="ln">43</text><text x="104" y="2728" fill="#e5e7eb">  );</text>
+<text x="34" y="2752" class="ln">44</text><text x="104" y="2752" fill="#c084fc">  const evidence = inputEvidence.map((item) =&gt; ({</text>
+<text x="34" y="2776" class="ln">45</text><text x="104" y="2776" fill="#e5e7eb">    ...item,</text>
+<text x="34" y="2800" class="ln">46</text><text x="104" y="2800" fill="#e5e7eb">    relations: relations.filter((relation) =&gt; relation.evidenceId === item.id),</text>
+<text x="34" y="2824" class="ln">47</text><text x="104" y="2824" fill="#e5e7eb">  }));</text>
+<text x="34" y="2848" class="ln">48</text><text x="104" y="2848" fill="#e5e7eb"> </text>
+<text x="34" y="2872" class="ln">49</text><text x="104" y="2872" fill="#86efac">  onProgress?.({ stage: 'propagation', message: '正在执行权限、版本、覆盖、冲突和依赖传播' });</text>
+<text x="34" y="2896" class="ln">50</text><text x="104" y="2896" fill="#c084fc">  const propagated = propagateConstraints(parsed.claims, evidence, parsed.dependencies, access);</text>
+  </g>
+</svg>

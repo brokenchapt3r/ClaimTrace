@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="2650" viewBox="0 0 1500 2650">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="#e5e7eb"/>
+  <rect x="24" y="24" width="1452" height="2602" rx="18" fill="url(#bg)" filter="url(#shadow)"/>
+  <circle cx="58" cy="56" r="7" fill="#ef4444"/>
+  <circle cx="82" cy="56" r="7" fill="#f59e0b"/>
+  <circle cx="106" cy="56" r="7" fill="#22c55e"/>
+  <text x="132" y="62" fill="#f8fafc" font-size="22" font-family="Arial, sans-serif" font-weight="700">约束传播迭代与冲突级联更新</text>
+  <text x="34" y="92" fill="#94a3b8" font-size="15" font-family="Arial, sans-serif">ClaimTrace processing modules</text>
+  <g font-family="Consolas, monospace" font-size="16" xml:space="preserve">
+    <style>.ln{fill:#64748b;text-anchor:end}</style>
+<text x="34" y="112" class="ln"></text><text x="104" y="112" fill="#7dd3fc">// web/src/core/graph.ts</text>
+<text x="34" y="136" class="ln">189</text><text x="104" y="136" fill="#facc15">  claims: Claim[],</text>
+<text x="34" y="160" class="ln">190</text><text x="104" y="160" fill="#facc15">  inputEvidence: Evidence[],</text>
+<text x="34" y="184" class="ln">191</text><text x="104" y="184" fill="#e5e7eb">  dependencies: ClaimDependency[],</text>
+<text x="34" y="208" class="ln">192</text><text x="104" y="208" fill="#e5e7eb">  access: AccessContext,</text>
+<text x="34" y="232" class="ln">193</text><text x="104" y="232" fill="#e5e7eb">) {</text>
+<text x="34" y="256" class="ln">194</text><text x="104" y="256" fill="#c084fc">  let claimStatus = Object.fromEntries(</text>
+<text x="34" y="280" class="ln">195</text><text x="104" y="280" fill="#86efac">    claims.map((claim) =&gt; [claim.id, 'SUPPORTED' as ClaimStatus]),</text>
+<text x="34" y="304" class="ln">196</text><text x="104" y="304" fill="#e5e7eb">  );</text>
+<text x="34" y="328" class="ln">197</text><text x="104" y="328" fill="#c084fc">  const snapshots: PropagationSnapshot[] = [</text>
+<text x="34" y="352" class="ln">198</text><text x="104" y="352" fill="#86efac">    snapshot('0', '乐观初始化', '所有声明以完全支持状态进入约束检查。', inputEvidence, claimStatus, [], []),</text>
+<text x="34" y="376" class="ln">199</text><text x="104" y="376" fill="#e5e7eb">  ];</text>
+<text x="34" y="400" class="ln">200</text><text x="104" y="400" fill="#e5e7eb"> </text>
+<text x="34" y="424" class="ln">201</text><text x="104" y="424" fill="#c084fc">  const permission = applyPermissionGate(inputEvidence, access);</text>
+<text x="34" y="448" class="ln">202</text><text x="104" y="448" fill="#c084fc">  const versioned = applyVersionDominance(permission.evidence);</text>
+<text x="34" y="472" class="ln">203</text><text x="104" y="472" fill="#c084fc">  let evidence = versioned.evidence;</text>
+<text x="34" y="496" class="ln">204</text><text x="104" y="496" fill="#e5e7eb">  snapshots.push(</text>
+<text x="34" y="520" class="ln">205</text><text x="104" y="520" fill="#e5e7eb">    snapshot(</text>
+<text x="34" y="544" class="ln">206</text><text x="104" y="544" fill="#86efac">      '1',</text>
+<text x="34" y="568" class="ln">207</text><text x="104" y="568" fill="#86efac">      '权限与版本门控',</text>
+<text x="34" y="592" class="ln">208</text><text x="104" y="592" fill="#86efac">      `权限裁剪 ${permission.changedEdgeIds.length} 条边，版本替代裁剪 ${versioned.changedEdgeIds.length} 条边。`,</text>
+<text x="34" y="616" class="ln">209</text><text x="104" y="616" fill="#e5e7eb">      evidence,</text>
+<text x="34" y="640" class="ln">210</text><text x="104" y="640" fill="#e5e7eb">      claimStatus,</text>
+<text x="34" y="664" class="ln">211</text><text x="104" y="664" fill="#e5e7eb">      [],</text>
+<text x="34" y="688" class="ln">212</text><text x="104" y="688" fill="#e5e7eb">      [...permission.changedEdgeIds, ...versioned.changedEdgeIds],</text>
+<text x="34" y="712" class="ln">213</text><text x="104" y="712" fill="#e5e7eb">    ),</text>
+<text x="34" y="736" class="ln">214</text><text x="104" y="736" fill="#e5e7eb">  );</text>
+<text x="34" y="760" class="ln">215</text><text x="104" y="760" fill="#e5e7eb"> </text>
+<text x="34" y="784" class="ln">216</text><text x="104" y="784" fill="#c084fc">  const evidenceChanged: string[] = [];</text>
+<text x="34" y="808" class="ln">217</text><text x="104" y="808" fill="#e5e7eb">  claims.forEach((claim) =&gt; {</text>
+<text x="34" y="832" class="ln">218</text><text x="104" y="832" fill="#c084fc">    const next = statusFromEvidence(claim, evidence);</text>
+<text x="34" y="856" class="ln">219</text><text x="104" y="856" fill="#c084fc">    const lowered = lowerStatus(claimStatus[claim.id], next);</text>
+<text x="34" y="880" class="ln">220</text><text x="104" y="880" fill="#c084fc">    if (lowered !== claimStatus[claim.id]) evidenceChanged.push(claim.id);</text>
+<text x="34" y="904" class="ln">221</text><text x="104" y="904" fill="#e5e7eb">    claimStatus[claim.id] = lowered;</text>
+<text x="34" y="928" class="ln">222</text><text x="104" y="928" fill="#c084fc">    const covered = new Set(</text>
+<text x="34" y="952" class="ln">223</text><text x="104" y="952" fill="#e5e7eb">      linkedRelations(claim.id, evidence)</text>
+<text x="34" y="976" class="ln">224</text><text x="104" y="976" fill="#86efac">        .filter(({ relation }) =&gt; relation.active &amp;&amp; relation.type === 'support')</text>
+<text x="34" y="1000" class="ln">225</text><text x="104" y="1000" fill="#e5e7eb">        .flatMap(({ relation }) =&gt; relation.coveredComponentIds),</text>
+<text x="34" y="1024" class="ln">226</text><text x="104" y="1024" fill="#e5e7eb">    );</text>
+<text x="34" y="1048" class="ln">227</text><text x="104" y="1048" fill="#e5e7eb">    claim.missingComponents = claim.components</text>
+<text x="34" y="1072" class="ln">228</text><text x="104" y="1072" fill="#e5e7eb">      .filter((component) =&gt; !covered.has(component.id))</text>
+<text x="34" y="1096" class="ln">229</text><text x="104" y="1096" fill="#e5e7eb">      .map((component) =&gt; component.text);</text>
+<text x="34" y="1120" class="ln">230</text><text x="104" y="1120" fill="#e5e7eb">  });</text>
+<text x="34" y="1144" class="ln">231</text><text x="104" y="1144" fill="#e5e7eb">  dependencies</text>
+<text x="34" y="1168" class="ln">232</text><text x="104" y="1168" fill="#86efac">    .filter((edge) =&gt; edge.type === 'exclusion')</text>
+<text x="34" y="1192" class="ln">233</text><text x="104" y="1192" fill="#e5e7eb">    .forEach((edge) =&gt; {</text>
+<text x="34" y="1216" class="ln">234</text><text x="104" y="1216" fill="#c084fc">      const left = claimStatus[edge.from];</text>
+<text x="34" y="1240" class="ln">235</text><text x="104" y="1240" fill="#c084fc">      const right = claimStatus[edge.to];</text>
+<text x="34" y="1264" class="ln">236</text><text x="104" y="1264" fill="#c084fc">      const accepted = (status: ClaimStatus) =&gt;</text>
+<text x="34" y="1288" class="ln">237</text><text x="104" y="1288" fill="#86efac">        status === 'SUPPORTED' || status === 'PARTIALLY_SUPPORTED';</text>
+<text x="34" y="1312" class="ln">238</text><text x="104" y="1312" fill="#c084fc">      if (!accepted(left) || !accepted(right)) return;</text>
+<text x="34" y="1336" class="ln">239</text><text x="104" y="1336" fill="#c084fc">      const loser =</text>
+<text x="34" y="1360" class="ln">240</text><text x="104" y="1360" fill="#e5e7eb">        supportStrength(edge.from, evidence) &lt; supportStrength(edge.to, evidence)</text>
+<text x="34" y="1384" class="ln">241</text><text x="104" y="1384" fill="#e5e7eb">          ? edge.from</text>
+<text x="34" y="1408" class="ln">242</text><text x="104" y="1408" fill="#e5e7eb">          : edge.to;</text>
+<text x="34" y="1432" class="ln">243</text><text x="104" y="1432" fill="#c084fc">      const lowered = lowerStatus(claimStatus[loser], 'CONFLICTED');</text>
+<text x="34" y="1456" class="ln">244</text><text x="104" y="1456" fill="#c084fc">      if (lowered !== claimStatus[loser] &amp;&amp; !evidenceChanged.includes(loser)) {</text>
+<text x="34" y="1480" class="ln">245</text><text x="104" y="1480" fill="#e5e7eb">        evidenceChanged.push(loser);</text>
+<text x="34" y="1504" class="ln">246</text><text x="104" y="1504" fill="#e5e7eb">      }</text>
+<text x="34" y="1528" class="ln">247</text><text x="104" y="1528" fill="#e5e7eb">      claimStatus[loser] = lowered;</text>
+<text x="34" y="1552" class="ln">248</text><text x="104" y="1552" fill="#e5e7eb">    });</text>
+<text x="34" y="1576" class="ln">249</text><text x="104" y="1576" fill="#e5e7eb">  snapshots.push(</text>
+<text x="34" y="1600" class="ln">250</text><text x="104" y="1600" fill="#86efac">    snapshot('2', '覆盖与冲突判定', '按语义成分覆盖矩阵和 NLI 冲突边执行首次降级。', evidence, claimStatus, evidenceChanged, []),</text>
+<text x="34" y="1624" class="ln">251</text><text x="104" y="1624" fill="#e5e7eb">  );</text>
+<text x="34" y="1648" class="ln">252</text><text x="104" y="1648" fill="#e5e7eb"> </text>
+<text x="34" y="1672" class="ln">253</text><text x="104" y="1672" fill="#c084fc">  const order = topologicalOrder(claims.map((claim) =&gt; claim.id), dependencies);</text>
+<text x="34" y="1696" class="ln">254</text><text x="104" y="1696" fill="#c084fc">  let round = 0;</text>
+<text x="34" y="1720" class="ln">255</text><text x="104" y="1720" fill="#c084fc">  for (;;) {</text>
+<text x="34" y="1744" class="ln">256</text><text x="104" y="1744" fill="#e5e7eb">    round += 1;</text>
+<text x="34" y="1768" class="ln">257</text><text x="104" y="1768" fill="#c084fc">    const changed: string[] = [];</text>
+<text x="34" y="1792" class="ln">258</text><text x="104" y="1792" fill="#e5e7eb">    order.forEach((claimId) =&gt; {</text>
+<text x="34" y="1816" class="ln">259</text><text x="104" y="1816" fill="#c084fc">      const incoming = dependencies.filter(</text>
+<text x="34" y="1840" class="ln">260</text><text x="104" y="1840" fill="#86efac">        (edge) =&gt; edge.to === claimId &amp;&amp; (edge.type === 'premise' || edge.type === 'implication'),</text>
+<text x="34" y="1864" class="ln">261</text><text x="104" y="1864" fill="#e5e7eb">      );</text>
+<text x="34" y="1888" class="ln">262</text><text x="104" y="1888" fill="#c084fc">      const invalidPremise = incoming.some((edge) =&gt;</text>
+<text x="34" y="1912" class="ln">263</text><text x="104" y="1912" fill="#86efac">        ['CONFLICTED', 'ABSTAINED', 'NO_PERMISSION'].includes(claimStatus[edge.from]),</text>
+<text x="34" y="1936" class="ln">264</text><text x="104" y="1936" fill="#e5e7eb">      );</text>
+<text x="34" y="1960" class="ln">265</text><text x="104" y="1960" fill="#c084fc">      if (!invalidPremise) return;</text>
+<text x="34" y="1984" class="ln">266</text><text x="104" y="1984" fill="#c084fc">      const lowered = lowerStatus(claimStatus[claimId], 'ABSTAINED');</text>
+<text x="34" y="2008" class="ln">267</text><text x="104" y="2008" fill="#c084fc">      if (lowered !== claimStatus[claimId]) changed.push(claimId);</text>
+<text x="34" y="2032" class="ln">268</text><text x="104" y="2032" fill="#e5e7eb">      claimStatus[claimId] = lowered;</text>
+<text x="34" y="2056" class="ln">269</text><text x="104" y="2056" fill="#e5e7eb">    });</text>
+<text x="34" y="2080" class="ln">270</text><text x="104" y="2080" fill="#e5e7eb">    snapshots.push(</text>
+<text x="34" y="2104" class="ln">271</text><text x="104" y="2104" fill="#e5e7eb">      snapshot(</text>
+<text x="34" y="2128" class="ln">272</text><text x="104" y="2128" fill="#86efac">        `${round + 2}`,</text>
+<text x="34" y="2152" class="ln">273</text><text x="104" y="2152" fill="#86efac">        '依赖级联传播',</text>
+<text x="34" y="2176" class="ln">274</text><text x="104" y="2176" fill="#e5e7eb">        changed.length</text>
+<text x="34" y="2200" class="ln">275</text><text x="104" y="2200" fill="#86efac">          ? `沿无环依赖图降级 ${changed.length} 个下游声明。`</text>
+<text x="34" y="2224" class="ln">276</text><text x="104" y="2224" fill="#86efac">          : '本轮没有节点或边变化，状态达到固定点。',</text>
+<text x="34" y="2248" class="ln">277</text><text x="104" y="2248" fill="#e5e7eb">        evidence,</text>
+<text x="34" y="2272" class="ln">278</text><text x="104" y="2272" fill="#e5e7eb">        claimStatus,</text>
+<text x="34" y="2296" class="ln">279</text><text x="104" y="2296" fill="#e5e7eb">        changed,</text>
+<text x="34" y="2320" class="ln">280</text><text x="104" y="2320" fill="#e5e7eb">        [],</text>
+<text x="34" y="2344" class="ln">281</text><text x="104" y="2344" fill="#e5e7eb">      ),</text>
+<text x="34" y="2368" class="ln">282</text><text x="104" y="2368" fill="#e5e7eb">    );</text>
+<text x="34" y="2392" class="ln">283</text><text x="104" y="2392" fill="#c084fc">    if (changed.length === 0 || round &gt;= claims.length) break;</text>
+<text x="34" y="2416" class="ln">284</text><text x="104" y="2416" fill="#e5e7eb">  }</text>
+<text x="34" y="2440" class="ln">285</text><text x="104" y="2440" fill="#e5e7eb"> </text>
+<text x="34" y="2464" class="ln">286</text><text x="104" y="2464" fill="#c084fc">  return { evidence, claimStatus, snapshots };</text>
+<text x="34" y="2488" class="ln">287</text><text x="104" y="2488" fill="#e5e7eb">}</text>
+<text x="34" y="2512" class="ln">288</text><text x="104" y="2512" fill="#e5e7eb"> </text>
+<text x="34" y="2536" class="ln">289</text><text x="104" y="2536" fill="#facc15">export function allRelations(evidence: Evidence[]): EvidenceRelation[] {</text>
+<text x="34" y="2560" class="ln">290</text><text x="104" y="2560" fill="#c084fc">  return evidence.flatMap((item) =&gt; item.relations);</text>
+<text x="34" y="2584" class="ln">291</text><text x="104" y="2584" fill="#e5e7eb">}</text>
+  </g>
+</svg>

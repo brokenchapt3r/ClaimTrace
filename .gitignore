@@ -1,0 +1,31 @@
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+.cursor/
+.agents/
+
+# Logs and runtime state
+*.log
+logs/
+*.pid
+*.pid.lock
+
+# Local configuration and credentials
+**/.env
+**/.env.local
+**/.env.*.local
+web/.env.development
+
+# Dependencies, build output, and test artifacts
+**/node_modules/
+**/dist/
+**/coverage/
+*.tsbuildinfo
+.npm/
+.vite/
+
+# Temporary archives and backups
+*.tgz
+*.tar.gz
+backup/

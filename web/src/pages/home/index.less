@@ -1,0 +1,1371 @@
+.ct-page-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.ct-card {
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.ct-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 20px 0;
+}
+
+.ct-card-title {
+  margin: 0;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.ct-card-content {
+  padding: 20px;
+}
+
+.ct-button {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 0 12px;
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.ct-button:hover:not(:disabled) {
+  background: #1e293b;
+}
+
+.ct-button:focus-visible {
+  outline: 2px solid #14b8a6;
+  outline-offset: 2px;
+}
+
+.ct-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.ct-button-outline {
+  border-color: #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+}
+
+.ct-button-outline:hover:not(:disabled) {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.ct-button-accent {
+  background: #0f766e;
+}
+
+.ct-button-accent:hover:not(:disabled) {
+  background: #115e59;
+}
+
+.ct-button-secondary,
+.ct-button-ghost {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.ct-button-sm {
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.ct-button-default {
+  min-height: 34px;
+}
+
+.ct-button-lg {
+  min-height: 40px;
+  padding: 0 16px;
+}
+
+.ct-button-icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+}
+
+.ct-button-block {
+  width: 100%;
+}
+
+.ct-button-spinner {
+  animation: ct-spin 900ms linear infinite;
+}
+
+.ct-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ct-badge-default,
+.ct-badge-outline {
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.ct-badge-secondary {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.ct-badge-success {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.ct-badge-destructive {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.ct-textarea {
+  width: 100%;
+  min-height: 96px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ct-textarea:focus-visible {
+  border-color: #0f766e;
+  outline: 2px solid rgba(20, 184, 166, 0.2);
+}
+
+.ct-textarea-resizable {
+  overflow: auto;
+}
+
+.ct-textarea-fixed {
+  overflow: hidden;
+}
+
+@keyframes ct-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.evg-page {
+  padding: 0;
+  background: #eef2f6;
+}
+
+.evg-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(900px, 1fr);
+  min-height: 100%;
+  color: #0f172a;
+}
+
+.evg-sidebar {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 22px;
+  padding: 24px;
+  background: #101827;
+  color: #f8fafc;
+}
+
+.evg-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.evg-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  background: #14b8a6;
+  color: #042f2e;
+  font-weight: 800;
+}
+
+.evg-brand strong,
+.evg-brand span {
+  display: block;
+}
+
+.evg-brand span {
+  margin-top: 3px;
+  color: #a8b3c4;
+  font-size: 12px;
+}
+
+.evg-side-section {
+  display: grid;
+  gap: 8px;
+}
+
+.evg-side-title {
+  margin-bottom: 2px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.evg-side-step,
+.evg-preset-action {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 11px;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.evg-side-step.active {
+  border-color: rgba(20, 184, 166, 0.45);
+  background: #12332f;
+  color: #ffffff;
+}
+
+.evg-preset-action {
+  border-color: #273449;
+  background: #162033;
+}
+
+.evg-preset-action:hover {
+  border-color: #14b8a6;
+  color: #ffffff;
+}
+
+.evg-side-tool {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 11px;
+  background: #162033;
+  color: #f8fafc;
+  text-align: left;
+  cursor: pointer;
+}
+
+.evg-side-tool:hover {
+  border-color: #14b8a6;
+}
+
+.evg-side-tool span,
+.evg-side-tool strong,
+.evg-side-tool small {
+  display: block;
+  min-width: 0;
+}
+
+.evg-side-tool span {
+  overflow: hidden;
+}
+
+.evg-side-tool strong {
+  font-size: 13px;
+}
+
+.evg-side-tool small {
+  margin-top: 3px;
+  overflow: hidden;
+  color: #94a3b8;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evg-run {
+  display: grid;
+  gap: 7px;
+  margin-top: auto;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 14px;
+  background: #0f172a;
+}
+
+.evg-run span,
+.evg-run small {
+  color: #94a3b8;
+}
+
+.evg-run strong {
+  color: #ffffff;
+}
+
+.evg-main {
+  width: min(100%, 1580px);
+  margin: 0 auto;
+  padding: 24px;
+  color: #0f172a;
+  overflow: auto;
+}
+
+.evg-main :where(h1, h2, h3, h4, p, span, label, strong, dt, dd, li) {
+  color: inherit;
+}
+
+.evg-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.evg-topbar p,
+.evg-topbar h1 {
+  margin: 0;
+}
+
+.evg-topbar p {
+  margin-bottom: 6px;
+  color: #0f766e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.evg-topbar h1 {
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.evg-run-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.evg-run-summary span {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #ffffff;
+}
+
+.evg-stage-bar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.evg-stage-chip {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 8px;
+  padding: 10px 8px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.evg-stage-chip.active {
+  border-color: rgba(15, 118, 110, 0.35);
+  background: #dff7f2;
+  color: #115e59;
+}
+
+.evg-query,
+.evg-graph-card,
+.evg-side,
+.evg-claims,
+.evg-propagation,
+.evg-result {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.evg-query :where(.ant-card-head-title, .ant-card-body),
+.evg-graph-card :where(.ant-card-head-title, .ant-card-body),
+.evg-side :where(.ant-card-head-title, .ant-card-body),
+.evg-claims :where(.ant-card-head-title, .ant-card-body),
+.evg-propagation :where(.ant-card-head-title, .ant-card-body),
+.evg-result :where(.ant-card-head-title, .ant-card-body) {
+  color: #0f172a;
+}
+
+.evg-query {
+  margin-bottom: 16px;
+}
+
+.evg-draft-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.evg-draft-card {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.evg-draft-text {
+  max-height: 420px;
+  margin: 0;
+  padding-right: 6px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.evg-formula {
+  border: 1px solid rgba(15, 118, 110, 0.22);
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: #f0fdfa;
+  color: #134e4a;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.evg-kv-grid,
+.evg-constraint-grid,
+.evg-claim-meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px 10px;
+  margin: 10px 0 0;
+  font-size: 12px;
+}
+
+.evg-kv-grid span,
+.evg-constraint-grid span,
+.evg-claim-meta dt {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.evg-kv-grid strong,
+.evg-constraint-grid strong,
+.evg-claim-meta dd {
+  margin: 0;
+  color: #0f172a;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.evg-runtime-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.evg-file-input {
+  display: none;
+}
+
+.evg-runtime-toolbar label {
+  display: inline-flex;
+  min-width: 260px;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.evg-runtime-toolbar select,
+.evg-runtime-toolbar input {
+  min-width: 180px;
+  height: 32px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 0 10px;
+  color: #0f172a;
+  outline: none;
+}
+
+.evg-runtime-toolbar select:focus,
+.evg-runtime-toolbar input:focus {
+  border-color: #0f766e;
+}
+
+.evg-runtime-toolbar label > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.evg-model-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.evg-model-line span {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: #f8fafc;
+}
+
+.evg-retrieval-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -4px 0 14px;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.evg-retrieval-info span {
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 6px;
+  background: #f0fdfa;
+  padding: 6px 9px;
+  font-weight: 700;
+}
+
+.evg-query-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.evg-query-actions {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.evg-query-actions span {
+  color: #475569;
+  font-size: 12px;
+}
+
+.evg-query textarea,
+.evg-query textarea:focus,
+.evg-query .ant-input {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.evg-query textarea::placeholder,
+.evg-query .ant-input::placeholder {
+  color: #94a3b8;
+}
+
+.evg-grid {
+  display: grid;
+  grid-template-columns: 360px minmax(520px, 1fr) 340px;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.evg-graph-card {
+  min-height: 500px;
+}
+
+.evg-graph-card .ant-card-body {
+  max-height: 760px;
+  overflow: auto;
+}
+
+.evg-side {
+  grid-row: span 2;
+}
+
+.evg-card-head {
+  display: flex;
+  min-height: 60px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.evg-card-head > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.evg-list {
+  display: grid;
+  gap: 10px;
+}
+
+.evg-muted {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.evg-claim,
+.evg-evidence,
+.evg-result-card {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+}
+
+.evg-claim header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.evg-claim strong {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.evg-claim p {
+  margin: 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.evg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px 12px;
+  color: #475569;
+  font-size: 11px;
+}
+
+.evg-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.evg-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+}
+
+.status-supported {
+  fill: #17803b;
+  background: #17803b;
+}
+
+.status-partial {
+  fill: #2563eb;
+  background: #2563eb;
+}
+
+.status-conflicted {
+  fill: #c2410c;
+  background: #c2410c;
+}
+
+.status-abstained {
+  fill: #64748b;
+  background: #64748b;
+}
+
+.status-permission {
+  fill: #7c3aed;
+  background: #7c3aed;
+}
+
+.evg-graph {
+  width: 100%;
+  min-height: 430px;
+  border: 1px solid #e6ecf3;
+  border-radius: 8px;
+  background:
+    linear-gradient(#edf2f8 1px, transparent 1px),
+    linear-gradient(90deg, #edf2f8 1px, transparent 1px), #fbfdff;
+  background-size: 32px 32px;
+}
+
+.evg-edge {
+  fill: none;
+  stroke: #9aa9bb;
+  stroke-width: 2;
+}
+
+.evg-edge.support {
+  stroke: #17803b;
+}
+
+.evg-edge.conflict {
+  stroke: #c2410c;
+  stroke-dasharray: 7 5;
+}
+
+.evg-edge.unknown {
+  stroke: #64748b;
+  stroke-dasharray: 3 6;
+}
+
+.evg-edge.cut {
+  opacity: 0.18;
+}
+
+.evg-edge.active {
+  opacity: 0.9;
+  stroke-width: 2.5;
+}
+
+.evg-node {
+  filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.18));
+}
+
+.evg-node.clickable {
+  cursor: pointer;
+}
+
+.evg-node.selected rect {
+  stroke: #0f172a;
+  stroke-width: 4;
+}
+
+.evg-node text {
+  fill: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.evg-node text.sub {
+  fill: rgba(255, 255, 255, 0.82);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.evg-svg-muted {
+  fill: #64748b;
+  font-size: 18px;
+}
+
+.evg-evidence h3,
+.evg-result-card h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.evg-evidence-pager {
+  display: grid;
+  gap: 12px;
+}
+
+.evg-selection-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 6px;
+  background: #f0fdfa;
+  padding: 8px 10px;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.evg-evidence-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.evg-evidence-tabs button {
+  min-width: 38px;
+  height: 28px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evg-evidence-tabs button.active {
+  border-color: #0f766e;
+  background: #0f766e;
+  color: #ffffff;
+}
+
+.evg-evidence {
+  min-height: 520px;
+}
+
+.evg-evidence-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.evg-evidence-title-row h3 {
+  line-height: 1.45;
+}
+
+.evg-document-preview {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0;
+  border: 1px solid #dbe5ee;
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 10px;
+}
+
+.evg-document-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.evg-document-preview-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.evg-document-preview-head a {
+  color: #0f766e;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.evg-document-preview-head em {
+  border-radius: 999px;
+  background: #e2e8f0;
+  padding: 3px 8px;
+  color: #334155;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.evg-document-preview img {
+  width: 100%;
+  max-height: 220px;
+  border: 1px solid #dbe5ee;
+  border-radius: 6px;
+  background: #ffffff;
+  object-fit: contain;
+}
+
+.evg-document-sheet {
+  min-height: 178px;
+  border: 1px solid #dbe5ee;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, rgba(15, 118, 110, 0.09) 0 5px, transparent 5px),
+    #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  padding: 16px 16px 16px 22px;
+}
+
+.evg-document-sheet strong,
+.evg-document-sheet span,
+.evg-document-sheet p {
+  display: block;
+}
+
+.evg-document-sheet strong {
+  color: #0f172a;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.evg-document-sheet span {
+  margin: 8px 0;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.evg-document-sheet p {
+  max-height: 92px;
+  margin: 0;
+  overflow: hidden;
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.evg-document-meta {
+  display: grid;
+  gap: 4px;
+  color: #64748b;
+  font-size: 11px;
+  word-break: break-all;
+}
+
+.evg-evidence-page-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.evg-evidence dl {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.evg-evidence dt {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.evg-evidence dd {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.evg-relations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.evg-relations span {
+  border-radius: 6px;
+  padding: 4px 8px;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 12px;
+}
+
+.evg-missing {
+  margin: 8px 0 0;
+  color: #b45309;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.evg-stepper {
+  display: flex;
+  gap: 8px;
+}
+
+.evg-timeline {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.evg-timeline li {
+  position: relative;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px 10px 34px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.evg-timeline li::before {
+  position: absolute;
+  top: 13px;
+  left: 12px;
+  width: 11px;
+  height: 11px;
+  border-radius: 99px;
+  background: #cbd5e1;
+  content: "";
+}
+
+.evg-timeline li.active {
+  border-color: #0f766e;
+  background: #ecfdf5;
+  color: #134e4a;
+}
+
+.evg-timeline li.active::before {
+  background: #0f766e;
+}
+
+.evg-timeline strong,
+.evg-timeline span {
+  display: block;
+}
+
+.evg-result {
+  margin-top: 16px;
+}
+
+.evg-result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.evg-result-card p {
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.evg-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  border: 1px solid rgba(194, 65, 12, 0.28);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 14px;
+}
+
+.evg-answer {
+  margin-top: 14px;
+  border: 1px solid rgba(15, 118, 110, 0.22);
+  border-radius: 8px;
+  padding: 14px;
+  background: #f0fdfa;
+}
+
+.evg-answer h3 {
+  margin: 0 0 8px;
+  color: #134e4a;
+  font-size: 15px;
+}
+
+.evg-answer p {
+  margin: 0;
+  color: #134e4a;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+}
+
+.evg-final-answer button {
+  margin: 0 2px;
+  border: 0;
+  border-radius: 4px;
+  padding: 1px 4px;
+  background: #ccfbf1;
+  color: #0f766e;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evg-audit {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  border-top: 1px solid #dbe2ea;
+  padding-top: 14px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.evg-audit code {
+  overflow: hidden;
+  color: #0f172a;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evg-audit a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #0f766e;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.evg-modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.64);
+}
+
+.evg-model-settings {
+  width: min(860px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.28);
+  color: #0f172a;
+}
+
+.evg-model-settings > header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #dbe2ea;
+  padding: 18px 20px;
+  background: #ffffff;
+}
+
+.evg-model-settings h2,
+.evg-model-settings h3,
+.evg-model-settings p {
+  margin: 0;
+}
+
+.evg-model-settings h2 {
+  font-size: 19px;
+}
+
+.evg-model-settings > header p {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.evg-model-settings-body {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.evg-connection {
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.evg-connection-heading,
+.evg-connection-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.evg-connection-heading {
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.evg-connection-heading h3 {
+  font-size: 15px;
+}
+
+.evg-connection-heading p {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.evg-connection-heading > span {
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 4px 7px;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.evg-connection-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.evg-connection-fields label {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.evg-connection-fields label.wide {
+  grid-column: span 2;
+}
+
+.evg-connection-fields span {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.evg-connection-fields input {
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.evg-connection-fields input:focus {
+  border-color: #0f766e;
+  outline: 2px solid rgba(20, 184, 166, 0.18);
+}
+
+.evg-connection-footer {
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.evg-connection-footer > div {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.evg-connection-footer > div.success {
+  color: #047857;
+}
+
+.evg-connection-footer > div.error {
+  color: #be123c;
+}
+
+@media (max-width: 1280px) {
+  .evg-shell {
+    grid-template-columns: 250px minmax(740px, 1fr);
+  }
+
+  .evg-grid {
+    grid-template-columns: 320px minmax(460px, 1fr);
+  }
+
+  .evg-side {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+
+  .evg-result-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .evg-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .evg-sidebar {
+    min-height: auto;
+  }
+
+  .evg-main {
+    padding: 14px;
+  }
+
+  .evg-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .evg-stage-bar,
+  .evg-query-row,
+  .evg-draft-grid,
+  .evg-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .evg-side {
+    grid-column: auto;
+  }
+
+  .evg-audit {
+    grid-template-columns: 1fr;
+  }
+
+  .evg-modal-backdrop {
+    padding: 10px;
+  }
+
+  .evg-model-settings {
+    max-height: calc(100vh - 20px);
+  }
+
+  .evg-connection-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .evg-connection-fields label.wide {
+    grid-column: auto;
+  }
+
+  .evg-connection-footer {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .evg-connection-footer > div {
+    flex-basis: 100%;
+  }
+}

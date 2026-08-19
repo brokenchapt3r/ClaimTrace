@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1738" viewBox="0 0 1500 1738">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="#e5e7eb"/>
+  <rect x="24" y="24" width="1452" height="1690" rx="18" fill="url(#bg)" filter="url(#shadow)"/>
+  <circle cx="58" cy="56" r="7" fill="#ef4444"/>
+  <circle cx="82" cy="56" r="7" fill="#f59e0b"/>
+  <circle cx="106" cy="56" r="7" fill="#22c55e"/>
+  <text x="132" y="62" fill="#f8fafc" font-size="22" font-family="Arial, sans-serif" font-weight="700">自然语言输入与原始答案生成</text>
+  <text x="34" y="92" fill="#94a3b8" font-size="15" font-family="Arial, sans-serif">ClaimTrace processing modules</text>
+  <g font-family="Consolas, monospace" font-size="16" xml:space="preserve">
+    <style>.ln{fill:#64748b;text-anchor:end}</style>
+<text x="34" y="112" class="ln"></text><text x="104" y="112" fill="#7dd3fc">// web/src/adapters/model.ts</text>
+<text x="34" y="136" class="ln">155</text><text x="104" y="136" fill="#facc15">  async generateDraft(question: string, evidence: Evidence[]) {</text>
+<text x="34" y="160" class="ln">156</text><text x="104" y="160" fill="#c084fc">    const context = evidence</text>
+<text x="34" y="184" class="ln">157</text><text x="104" y="184" fill="#86efac">      .map((item) =&gt; `${item.id} | ${item.title} | ${item.text}`)</text>
+<text x="34" y="208" class="ln">158</text><text x="104" y="208" fill="#86efac">      .join('\n\n');</text>
+<text x="34" y="232" class="ln">159</text><text x="104" y="232" fill="#c084fc">    return this.complete(</text>
+<text x="34" y="256" class="ln">160</text><text x="104" y="256" fill="#86efac">      '你是知识库问答引擎。仅依据给定证据形成候选答案，不输出分析过程，不补充证据外事实。',</text>
+<text x="34" y="280" class="ln">161</text><text x="104" y="280" fill="#86efac">      `问题：${question}\n\n证据：\n${context}\n\n请给出完整候选答案，每项事实后标注证据编号。`,</text>
+<text x="34" y="304" class="ln">162</text><text x="104" y="304" fill="#86efac">      { maxTokens: 8192, stage: 'draft' },</text>
+<text x="34" y="328" class="ln">163</text><text x="104" y="328" fill="#e5e7eb">    );</text>
+<text x="34" y="352" class="ln">164</text><text x="104" y="352" fill="#e5e7eb">  }</text>
+
+<text x="34" y="400" class="ln"></text><text x="104" y="400" fill="#7dd3fc">// web/src/pages/home/index.tsx</text>
+<text x="34" y="424" class="ln">352</text><text x="104" y="424" fill="#c084fc">  async function run() {</text>
+<text x="34" y="448" class="ln">353</text><text x="104" y="448" fill="#e5e7eb">    setBusy(true);</text>
+<text x="34" y="472" class="ln">354</text><text x="104" y="472" fill="#86efac">    setError('');</text>
+<text x="34" y="496" class="ln">355</text><text x="104" y="496" fill="#e5e7eb">    setResult(undefined);</text>
+<text x="34" y="520" class="ln">356</text><text x="104" y="520" fill="#86efac">    setCandidateDraft('');</text>
+<text x="34" y="544" class="ln">357</text><text x="104" y="544" fill="#e5e7eb">    setAuditEnvelope(undefined);</text>
+<text x="34" y="568" class="ln">358</text><text x="104" y="568" fill="#e5e7eb">    setStep(0);</text>
+<text x="34" y="592" class="ln">359</text><text x="104" y="592" fill="#c084fc">    try {</text>
+<text x="34" y="616" class="ln">360</text><text x="104" y="616" fill="#c084fc">      const retrieved = await executeRetrieval();</text>
+<text x="34" y="640" class="ln">361</text><text x="104" y="640" fill="#c084fc">      if (retrieved.length === 0) throw new Error('没有通过准入过滤的候选证据');</text>
+<text x="34" y="664" class="ln">362</text><text x="104" y="664" fill="#c084fc">      const model = new ModelAdapter({</text>
+<text x="34" y="688" class="ln">363</text><text x="104" y="688" fill="#86efac">        endpoint: '/api/model/chat/completions',</text>
+<text x="34" y="712" class="ln">364</text><text x="104" y="712" fill="#e5e7eb">        model: runtimeConfig.model,</text>
+<text x="34" y="736" class="ln">365</text><text x="104" y="736" fill="#e5e7eb">        apiKey: runtimeConfig.apiKey,</text>
+<text x="34" y="760" class="ln">366</text><text x="104" y="760" fill="#e5e7eb">      });</text>
+<text x="34" y="784" class="ln">367</text><text x="104" y="784" fill="#c084fc">      const pipeline = await runVerificationPipeline(</text>
+<text x="34" y="808" class="ln">368</text><text x="104" y="808" fill="#e5e7eb">        question.trim(),</text>
+<text x="34" y="832" class="ln">369</text><text x="104" y="832" fill="#e5e7eb">        retrieved,</text>
+<text x="34" y="856" class="ln">370</text><text x="104" y="856" fill="#e5e7eb">        accessContext(),</text>
+<text x="34" y="880" class="ln">371</text><text x="104" y="880" fill="#e5e7eb">        model,</text>
+<text x="34" y="904" class="ln">372</text><text x="104" y="904" fill="#e5e7eb">        (event) =&gt; {</text>
+<text x="34" y="928" class="ln">373</text><text x="104" y="928" fill="#e5e7eb">          setRuntimeState(event.message);</text>
+<text x="34" y="952" class="ln">374</text><text x="104" y="952" fill="#c084fc">          if (event.draft) setCandidateDraft(event.draft);</text>
+<text x="34" y="976" class="ln">375</text><text x="104" y="976" fill="#c084fc">          const stages = {</text>
+<text x="34" y="1000" class="ln">376</text><text x="104" y="1000" fill="#e5e7eb">            draft: 1,</text>
+<text x="34" y="1024" class="ln">377</text><text x="104" y="1024" fill="#e5e7eb">            claims: 2,</text>
+<text x="34" y="1048" class="ln">378</text><text x="104" y="1048" fill="#e5e7eb">            relations: 3,</text>
+<text x="34" y="1072" class="ln">379</text><text x="104" y="1072" fill="#e5e7eb">            propagation: 3,</text>
+<text x="34" y="1096" class="ln">380</text><text x="104" y="1096" fill="#e5e7eb">            optimization: 4,</text>
+<text x="34" y="1120" class="ln">381</text><text x="104" y="1120" fill="#e5e7eb">            complete: 4,</text>
+<text x="34" y="1144" class="ln">382</text><text x="104" y="1144" fill="#e5e7eb">          } as const;</text>
+<text x="34" y="1168" class="ln">383</text><text x="104" y="1168" fill="#e5e7eb">          setActiveStage(stages[event.stage]);</text>
+<text x="34" y="1192" class="ln">384</text><text x="104" y="1192" fill="#e5e7eb">        },</text>
+<text x="34" y="1216" class="ln">385</text><text x="104" y="1216" fill="#e5e7eb">      );</text>
+<text x="34" y="1240" class="ln">386</text><text x="104" y="1240" fill="#c084fc">      const positionedClaims = layoutClaims(pipeline.claims);</text>
+<text x="34" y="1264" class="ln">387</text><text x="104" y="1264" fill="#c084fc">      const positionedEvidence = layoutEvidence(pipeline.evidence, positionedClaims.length);</text>
+<text x="34" y="1288" class="ln">388</text><text x="104" y="1288" fill="#c084fc">      const completed = { ...pipeline, claims: positionedClaims, evidence: positionedEvidence };</text>
+<text x="34" y="1312" class="ln">389</text><text x="104" y="1312" fill="#e5e7eb">      setResult(completed);</text>
+<text x="34" y="1336" class="ln">390</text><text x="104" y="1336" fill="#e5e7eb">      setEvidence(positionedEvidence);</text>
+<text x="34" y="1360" class="ln">391</text><text x="104" y="1360" fill="#e5e7eb">      setSelectedEvidenceIds(positionedEvidence.map((item) =&gt; item.id));</text>
+<text x="34" y="1384" class="ln">392</text><text x="104" y="1384" fill="#e5e7eb">      setStep(0);</text>
+<text x="34" y="1408" class="ln">393</text><text x="104" y="1408" fill="#e5e7eb">      setActiveStage(3);</text>
+<text x="34" y="1432" class="ln">394</text><text x="104" y="1432" fill="#86efac">      setRuntimeState('正在回放单调约束传播轨迹');</text>
+<text x="34" y="1456" class="ln">395</text><text x="104" y="1456" fill="#c084fc">      for (let index = 1; index &lt; completed.snapshots.length; index += 1) {</text>
+<text x="34" y="1480" class="ln">396</text><text x="104" y="1480" fill="#c084fc">        await delay(450);</text>
+<text x="34" y="1504" class="ln">397</text><text x="104" y="1504" fill="#e5e7eb">        setStep(index);</text>
+<text x="34" y="1528" class="ln">398</text><text x="104" y="1528" fill="#e5e7eb">      }</text>
+<text x="34" y="1552" class="ln">399</text><text x="104" y="1552" fill="#e5e7eb">      setActiveStage(4);</text>
+<text x="34" y="1576" class="ln">400</text><text x="104" y="1576" fill="#86efac">      logPipelineEvent('pipeline.completed', {</text>
+<text x="34" y="1600" class="ln">401</text><text x="104" y="1600" fill="#e5e7eb">        draft: previewText(completed.draft, 700),</text>
+<text x="34" y="1624" class="ln">402</text><text x="104" y="1624" fill="#e5e7eb">        finalAnswer: previewText(completed.answer, 900),</text>
+<text x="34" y="1648" class="ln">403</text><text x="104" y="1648" fill="#e5e7eb">        claims: completed.claims.map((claim) =&gt; ({</text>
+<text x="34" y="1672" class="ln">404</text><text x="104" y="1672" fill="#e5e7eb">          id: claim.id,</text>
+  </g>
+</svg>
